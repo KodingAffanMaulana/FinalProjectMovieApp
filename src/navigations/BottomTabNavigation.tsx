@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons'
 import Home from '../screens/Home'
 import Search from '../screens/Search'
 import Favorite from '../screens/Favorite'
+import MovieDetail from '../screens/MovieDetail'
 
 const Tab = createBottomTabNavigator()
 
