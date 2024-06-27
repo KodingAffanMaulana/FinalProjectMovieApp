@@ -17,7 +17,6 @@ type HomeStackParamList = {
   MovieDetail: { id: number };
 };
 
-
 type MovieItemNavigationProp = NativeStackNavigationProp<HomeStackParamList, 'MovieDetail'>;
 
 const MovieItem = ({ movie, size, coverType }: MovieItemProps): JSX.Element => {
@@ -26,8 +25,8 @@ const MovieItem = ({ movie, size, coverType }: MovieItemProps): JSX.Element => {
   return (
     <TouchableOpacity
       onPress={() => {
-      navigation.navigate('MovieDetail', { id: movie.id })
-    }}
+        navigation.navigate('MovieDetail', { id: movie.id })
+      }}
     >
       <ImageBackground
         resizeMode="cover"

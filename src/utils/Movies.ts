@@ -15,7 +15,6 @@ const getDetailMovie = async (id: any, API_ACCESS_TOKEN: any, setDetailMovie: an
     }
     const data = await response.json();
     setDetailMovie(data);
-    console.log(data);
   } catch (error) {
     console.log('Error fetching movie details:', error);
   }
@@ -41,4 +40,4 @@ const getMovieList = async (path: any, API_ACCESS_TOKEN: any, setMovies: any) =>
     })
 }
 
-export { getMovieList, getDetailMovie, };
+export { getMovieList, getDetailMovie };

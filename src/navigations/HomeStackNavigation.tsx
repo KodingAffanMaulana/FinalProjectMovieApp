@@ -4,7 +4,7 @@ import HomeScreen from '../screens/Home';
 import MovieDetail from '../screens/MovieDetail';
 
 type HomeStackParamList = {
-  Home: undefined;
+  HomeScreen: undefined;
   MovieDetail: { id: number };
 };
 
@@ -20,7 +20,7 @@ const HomeStackNavigation = () => {
       headerTintColor: '#fff',
       headerTitleAlign: 'center',
     }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="MovieDetail" component={MovieDetail} />
     </Stack.Navigator>
   );

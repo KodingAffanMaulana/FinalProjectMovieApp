@@ -16,7 +16,7 @@ const BottomTabNavigator = (): JSX.Element => (
       tabBarActiveTintColor: '#fff',
     }}>
     <Tab.Screen
-      name="Home"
+      name="HomeScreen"
       component={HomeStackNavigation}
       options={{
         tabBarIcon: ({ color }) => (

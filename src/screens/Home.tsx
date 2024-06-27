@@ -28,8 +28,8 @@ const movieLists: MovieListProps[] = [
 
 const Home = (): JSX.Element => {
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <View >
         {movieLists.map((movieList) => (
           <MovieList
             title={movieList.title}
@@ -47,10 +47,7 @@ const Home = (): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     // marginTop: StatusBar.currentHeight ?? 12,
-    paddingTop: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    rowGap: 16,
+    // paddingTop: 10,
     backgroundColor: '#371A61'
   },
 })

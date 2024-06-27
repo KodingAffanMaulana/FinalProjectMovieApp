@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList } from 'react-native'
 import type { MovieListProps, Movie } from '../../types/app'
 import { API_ACCESS_TOKEN } from '@env'
 import MovieItem from './MovieItem'
-import { getMovieList } from '../../utils/Movies'
+import { getMovieList } from '../../utils/movies'
 
 const coverImageSize = {
   backdrop: {
@@ -52,6 +52,7 @@ const MovieList = ({ title, path, coverType }: MovieListProps): JSX.Element => {
 
 const styles = StyleSheet.create({
   header: {
+    padding: 10,
     marginLeft: 6,
     display: 'flex',
     flexDirection: 'row',
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '900',
-    color: 'white'
+    color: 'white',
   },
   movieList: {
     paddingLeft: 4,
