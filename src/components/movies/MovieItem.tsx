@@ -10,16 +10,24 @@ import { useNavigation, StackActions } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import type { MovieItemProps } from '../../types/app'
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
+
+type HomeStackParamList = {
+  Home: undefined;
+  MovieDetail: { id: number };
+};
+
+
+type MovieItemNavigationProp = NativeStackNavigationProp<HomeStackParamList, 'MovieDetail'>;
 
 const MovieItem = ({ movie, size, coverType }: MovieItemProps): JSX.Element => {
-  const navigation = useNavigation()
-  const pushAction = StackActions.push('Movie Detail', { id: movie.id })
+  const navigation = useNavigation<MovieItemNavigationProp>();
 
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.dispatch(pushAction)
-      }}
+      navigation.navigate('MovieDetail', { id: movie.id })
+    }}
     >
       <ImageBackground
         resizeMode="cover"

@@ -1,8 +1,10 @@
 import React from 'react'
-import { View, Text, Button } from 'react-native'
-import { API_URL, API_ACCESS_TOKEN } from '@env' // Ditambahkan
+import { Text, View, Button } from 'react-native'
+import { API_URL, API_ACCESS_TOKEN } from '@env'
 
-const MovieDetail = ({ navigation }: any): any => {
+const MovieDetail = ({ route ,navigation}: any): JSX.Element => {
+  const { id } = route.params
+
   const fetchData = (): void => {
     if (API_URL == null || API_ACCESS_TOKEN.length == null) {
       throw new Error('ENV not found')
