@@ -6,7 +6,7 @@ export interface MovieListProps {
 
 export interface Movie {
   backdrop_path: string
-  genres: { id: number; name: string }
+  genres: any
   homepage: string
   id: number
   original_title: string

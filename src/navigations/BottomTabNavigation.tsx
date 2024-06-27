@@ -8,7 +8,13 @@ import Favorite from '../screens/Favorite'
 const Tab = createBottomTabNavigator()
 
 const BottomTabNavigator = (): JSX.Element => (
-  <Tab.Navigator>
+  <Tab.Navigator
+    screenOptions={{
+      tabBarStyle: {
+        backgroundColor: '#371A61',
+      },
+      tabBarActiveTintColor: '#fff',
+    }}>
     <Tab.Screen
       name="Home"
       component={HomeStackNavigation}

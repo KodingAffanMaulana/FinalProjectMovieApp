@@ -46,10 +46,12 @@ const Home = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: StatusBar.currentHeight ?? 32,
+    // marginTop: StatusBar.currentHeight ?? 12,
+    paddingTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
     rowGap: 16,
+    backgroundColor: '#371A61'
   },
 })
 

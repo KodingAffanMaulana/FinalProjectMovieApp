@@ -3,8 +3,11 @@ import { View, Text, ImageBackground, StyleSheet, ScrollView, ActivityIndicator,
 import { API_ACCESS_TOKEN } from '@env'
 import { FontAwesome } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
-import type { Movie } from '../types/app'
-import getDetailMovie from '../utils/getMovies'
+import type { Movie, MovieListProps } from '../types/app'
+import { getDetailMovie } from '../utils/Movies'
+import tw from 'twrnc'
+import MovieList from '../components/movies/MovieList'
+import formatRuntime from '../utils/formatRuntime'
 
 export default function MovieDetail({ route }: any): JSX.Element {
   const { id } = route.params
@@ -22,6 +25,12 @@ export default function MovieDetail({ route }: any): JSX.Element {
     )
   }
 
+  const recomendations: MovieListProps = {
+    title: 'Recomendations',
+    path: `/movie/${id}/recommendations`,
+    coverType: 'poster',
+  }
+
   return (
     <ScrollView style={styles.container}>
       {detailMovie.backdrop_path ? (
@@ -30,7 +39,8 @@ export default function MovieDetail({ route }: any): JSX.Element {
           style={styles.backdrop}
         >
           <LinearGradient
-            colors={['#00000000', 'rgba(0, 0, 0, 0.7)']}
+            colors={['#00000000', 'hsla(0, 100%, 0%, 0.3);']}
+
             locations={[0.6, 0.8]}
             style={styles.gradientStyle}
           >
@@ -39,8 +49,10 @@ export default function MovieDetail({ route }: any): JSX.Element {
               <View style={styles.ratingContainer}>
                 <FontAwesome name="star" size={14} color="yellow" />
                 <Text style={styles.rating}>{detailMovie.vote_average.toFixed(1)}</Text>
-
               </View>
+              <Text style={tw`text-md font-bold text-white`}>
+                {formatRuntime(detailMovie.runtime)}
+              </Text>
               <TouchableOpacity>
                 {/* <FontAwesome name={isFavorite ? "heart" : "heart-o"} size={24} color="red" /> */}
               </TouchableOpacity>
@@ -53,10 +65,19 @@ export default function MovieDetail({ route }: any): JSX.Element {
           <Text style={styles.noImageText}>No Image Available</Text>
         </View>
       )}
-
-      <View style={styles.detailsContainer}>
-        <Text style={styles.overview}>{detailMovie.overview}</Text>
-        <View style={styles.infoRow}>
+      <View style={tw`p-4 bg-[#371A61]`}>
+        <Text style={tw`text-md font-semibold text-[#c9eded] pb-3`}>
+          Release : {new Date(detailMovie.release_date).getFullYear()}
+        </Text>
+        <View style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', paddingBottom: 10 }}>
+          {detailMovie.genres.map((genre: any) => (
+            <View key={genre.id} style={tw`bg-blue-800 rounded-2xl px-3 py-1 m-1`}>
+              <Text style={tw`text-white`}>{genre.name}</Text>
+            </View>
+          ))}
+        </View>
+        <Text style={tw`text-md text-[#c9eded] pb-4`}>{detailMovie.overview}</Text>
+        <View style={tw`flex flex-row justify-between mb-4`}>
           <View style={styles.infoColumn}>
             <Text style={styles.infoLabel}>Original Language</Text>
             <Text style={styles.infoValue}>{detailMovie.original_language}</Text>
@@ -66,7 +87,7 @@ export default function MovieDetail({ route }: any): JSX.Element {
             <Text style={styles.infoValue}>{detailMovie.popularity}</Text>
           </View>
         </View>
-        <View style={styles.infoRow}>
+        <View style={tw`flex flex-row justify-between mb-8`}>
           <View style={styles.infoColumn}>
             <Text style={styles.infoLabel}>Release Date</Text>
             <Text style={styles.infoValue}>{new Date(detailMovie.release_date).toDateString()}</Text>
@@ -76,6 +97,13 @@ export default function MovieDetail({ route }: any): JSX.Element {
             <Text style={styles.infoValue}>{detailMovie.vote_count}</Text>
           </View>
         </View>
+
+        <MovieList
+          title={recomendations.title}
+          path={recomendations.path}
+          coverType={recomendations.coverType}
+          key={recomendations.title}
+        />
       </View>
     </ScrollView>
   )
@@ -93,11 +121,11 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     width: '100%',
-    height: 220,
+    height: 240,
   },
   noImage: {
     width: '100%',
-    height: 220,
+    height: 240,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ccc',
@@ -119,7 +147,7 @@ const styles = StyleSheet.create({
   },
   gradientStyle: {
     padding: 8,
-    height: 220,
+    height: 240,
     width: '100%',
     borderRadius: 8,
     display: 'flex',
@@ -150,24 +178,18 @@ const styles = StyleSheet.create({
     color: '#FFD700',
     marginBottom: 10,
   },
-  overview: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  infoRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
   infoColumn: {
     flex: 1,
     paddingHorizontal: 5,
+    color: '#fff',
   },
   infoLabel: {
     fontSize: 14,
     fontWeight: 'bold',
+    color: 'white'
   },
   infoValue: {
     fontSize: 14,
+    color: '#76b5c5'
   },
 })

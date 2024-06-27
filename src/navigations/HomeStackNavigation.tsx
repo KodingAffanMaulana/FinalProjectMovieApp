@@ -12,7 +12,14 @@ const Stack = createNativeStackNavigator<HomeStackParamList>();
 
 const HomeStackNavigation = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: '#371A61',
+      },
+      headerTitle: 'Movie App',
+      headerTintColor: '#fff',
+      headerTitleAlign: 'center',
+    }}>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="MovieDetail" component={MovieDetail} />
     </Stack.Navigator>

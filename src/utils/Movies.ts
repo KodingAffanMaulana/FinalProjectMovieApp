@@ -21,4 +21,24 @@ const getDetailMovie = async (id: any, API_ACCESS_TOKEN: any, setDetailMovie: an
   }
 };
 
-export default getDetailMovie;
+const getMovieList = async (path: any, API_ACCESS_TOKEN: any, setMovies: any) => {
+  const url = `https://api.themoviedb.org/3/${path}`
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${API_ACCESS_TOKEN}`,
+    },
+  }
+
+  fetch(url, options)
+    .then(async (response) => await response.json())
+    .then((response) => {
+      setMovies(response.results)
+    })
+    .catch((errorResponse) => {
+      console.log(errorResponse)
+    })
+}
+
+export { getMovieList, getDetailMovie, };

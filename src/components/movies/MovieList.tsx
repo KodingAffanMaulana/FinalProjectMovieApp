@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList } from 'react-native'
 import type { MovieListProps, Movie } from '../../types/app'
 import { API_ACCESS_TOKEN } from '@env'
 import MovieItem from './MovieItem'
+import { getMovieList } from '../../utils/Movies'
 
 const coverImageSize = {
   backdrop: {
@@ -19,30 +20,8 @@ const MovieList = ({ title, path, coverType }: MovieListProps): JSX.Element => {
   const [movies, setMovies] = useState<Movie[]>([])
 
   useEffect(() => {
-    getMovieList()
+    getMovieList(path, API_ACCESS_TOKEN, setMovies)
   }, [])
-
-  const getMovieList = (): void => {
-    const url = `https://api.themoviedb.org/3/${path}`
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${API_ACCESS_TOKEN}`,
-      },
-    }
-
-    fetch(url, options)
-      .then(async (response) => await response.json())
-      .then((response) => {
-        setMovies(response.results)
-      })
-      .catch((errorResponse) => {
-        console.log(errorResponse)
-      })
-  }
-
-  console.log(movies)
 
   return (
     <View>
@@ -88,6 +67,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '900',
+    color: 'white'
   },
   movieList: {
     paddingLeft: 4,
