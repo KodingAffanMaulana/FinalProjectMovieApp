@@ -8,7 +8,7 @@ import tw from 'twrnc';
 import MovieList from '../components/movies/MovieList';
 import formatRuntime from '../utils/formatRuntime';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getDetailMovie } from '../utils/movies';
+import { getDetailMovie } from '../utils/Movies';
 
 export default function MovieDetail({ route }: any): JSX.Element {
   const { id } = route.params;

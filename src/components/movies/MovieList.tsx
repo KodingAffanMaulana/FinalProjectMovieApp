@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList } from 'react-native'
 import type { MovieListProps, Movie } from '../../types/app'
 import { API_ACCESS_TOKEN } from '@env'
 import MovieItem from './MovieItem'
-import { getMovieList } from '../../utils/movies'
+import { getMovieList } from '../../utils/Movies'
 
 const coverImageSize = {
   backdrop: {
