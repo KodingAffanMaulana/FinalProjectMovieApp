@@ -16,7 +16,7 @@ const HomeStackNavigation = () => {
       headerStyle: {
         backgroundColor: '#170C34',
       },
-      headerTitle: 'Cinema XXI KW 10',
+      headerTitle: 'Cinema XXI Super KW',
       headerTintColor: '#fff',
       headerTitleAlign: 'center',
       headerTitleStyle: {

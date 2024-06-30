@@ -6,9 +6,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import type { Movie, MovieListProps } from '../types/app';
 import tw from 'twrnc';
 import MovieList from '../components/movies/MovieList';
-import formatRuntime from '../utils/formatRuntime';
+import formatRuntime from '../services/formatRuntime';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getDetailMovie } from '../utils/movies';
+import { getDetailMovie } from '../services/movies';
 
 export default function MovieDetail({ route }: any): JSX.Element {
   const { id } = route.params;

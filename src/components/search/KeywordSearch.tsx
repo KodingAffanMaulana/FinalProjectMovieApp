@@ -92,7 +92,8 @@ const KeywordSearch = (): JSX.Element => {
         ItemSeparatorComponent={renderSeparator}
         ListFooterComponent={renderFooter}
         onEndReached={fetchMovies} // Memuat lebih banyak saat mendekati akhir daftar
-        onEndReachedThreshold={0.1} // Ambang batas jarak dari akhir daftar untuk memuat lebih banyak
+        onEndReachedThreshold={1}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
       />
     </View>
   );
