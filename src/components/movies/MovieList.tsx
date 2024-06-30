@@ -53,16 +53,16 @@ const MovieList = ({ title, path, coverType }: MovieListProps): JSX.Element => {
 const styles = StyleSheet.create({
   header: {
     padding: 10,
-    marginLeft: 6,
+    // marginLeft: 6,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },
   purpleLabel: {
-    width: 20,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#8978A4',
+    width: 13,
+    height: 30,
+    borderRadius: 3,
+    backgroundColor: '#fc466b',
     marginRight: 12,
   },
   title: {

@@ -111,13 +111,13 @@ export default function MovieDetail({ route }: any): JSX.Element {
           <Text style={styles.noImageText}>No Image Available</Text>
         </View>
       )}
-      <View style={tw`p-4 bg-[#371A61]`}>
+      <View style={tw`p-4 bg-[#170C34]`}>
         <Text style={tw`font-semibold text-[#c9eded] pb-3`}>
           Release: {new Date(detailMovie.release_date).getFullYear()}
         </Text>
-        <View style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', paddingBottom: 10 }}>
+        <View style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', paddingBottom: 10, gap: 5 }}>
           {detailMovie.genres.map((genre: any) => (
-            <View key={genre.id} style={tw`bg-blue-800 rounded-2xl px-3 py-1 m-1`}>
+            <View key={genre.id} style={tw`bg-blue-800 rounded-2xl px-3 py-1`}>
               <Text style={tw`text-white`}>{genre.name}</Text>
             </View>
           ))}
@@ -157,7 +157,7 @@ export default function MovieDetail({ route }: any): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#371A61',
+    backgroundColor: '#170C34',
   },
   loaderContainer: {
     flex: 1,

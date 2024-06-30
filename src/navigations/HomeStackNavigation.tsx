@@ -14,11 +14,14 @@ const HomeStackNavigation = () => {
   return (
     <Stack.Navigator screenOptions={{
       headerStyle: {
-        backgroundColor: '#371A61',
+        backgroundColor: '#170C34',
       },
-      headerTitle: 'Movie App',
+      headerTitle: 'Cinema XXI KW 10',
       headerTintColor: '#fff',
       headerTitleAlign: 'center',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     }}>
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="MovieDetail" component={MovieDetail} />

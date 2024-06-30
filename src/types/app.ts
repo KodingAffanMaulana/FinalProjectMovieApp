@@ -9,6 +9,7 @@ export interface Movie {
   genres: any
   homepage: string
   id: number
+  name : string
   original_title: string
   overview: string
   popularity: number
@@ -38,10 +39,16 @@ export interface Movie {
   video: boolean
   vote_average: number
   vote_count: number
+  imdb_id?: string
 }
 
 export interface MovieItemProps {
   movie: Movie
   size: { width: number; height: number }
   coverType: 'poster' | 'backdrop'
+}
+
+export interface Genre {
+  id: number;
+  name: string;
 }
