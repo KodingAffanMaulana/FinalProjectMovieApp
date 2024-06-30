@@ -6,7 +6,7 @@ import { StatusBar } from 'react-native'
 export default function App(): JSX.Element {
   return (
     <NavigationContainer>
-      <StatusBar animated={true} backgroundColor="#371A61" />
+      <StatusBar animated={true} backgroundColor="#170C34" />
       <BottomTabNavigator />
     </NavigationContainer>
   )

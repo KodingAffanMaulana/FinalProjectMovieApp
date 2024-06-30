@@ -10,6 +10,11 @@ const movieLists: MovieListProps[] = [
     coverType: 'backdrop',
   },
   {
+    title: 'Trending Movies',
+    path: 'trending/movie/week?language=en-US&page=1',
+    coverType: 'poster',
+  },
+  {
     title: 'Upcoming Movies',
     path: 'movie/upcoming?language=en-US&page=1',
     coverType: 'poster',
@@ -47,8 +52,8 @@ const Home = (): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     // marginTop: StatusBar.currentHeight ?? 12,
-    // paddingTop: 10,
-    backgroundColor: '#371A61'
+    paddingTop: 10,
+    backgroundColor: '#170C34'
   },
 })
 

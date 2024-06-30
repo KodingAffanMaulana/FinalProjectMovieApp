@@ -4,8 +4,8 @@ import Search from '../screens/Search';
 import CategorySearchResult from '../screens/CategorySearchResult';
 
 type SearchStackParamList = {
-    Search: undefined;
-    CategorySearchResult: undefined;
+  SearchLayout: undefined;
+  CategorySearchResult: undefined;
 };
 
 const Stack = createNativeStackNavigator<SearchStackParamList>();
@@ -14,13 +14,16 @@ const SearchStackNavigation = () => {
   return (
     <Stack.Navigator screenOptions={{
       headerStyle: {
-        backgroundColor: '#371A61',
+        backgroundColor: '#170C34',
       },
-      headerTitle: 'Movie App',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerTitle: 'Search Movies',
       headerTintColor: '#fff',
       headerTitleAlign: 'center',
     }}>
-      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="SearchLayout" component={Search} />
       <Stack.Screen name="CategorySearchResult" component={CategorySearchResult} />
     </Stack.Navigator>
   );

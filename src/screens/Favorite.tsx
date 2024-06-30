@@ -34,8 +34,12 @@ export default function Favorite(): JSX.Element {
   }
 
   return (
-    <View style={tw`bg-[#371A61] h-[1200p] `}>
-      <Text style={tw`text-white font-bold py-3 text-3xl text-center `}>Favorite</Text>
+    <View style={{
+      flex: 1,
+      backgroundColor: '#170C34',
+      minWidth: Dimensions.get('window').width,
+    }}>
+      <Text style={tw`text-white font-bold py-3 text-xl text-center `}>My Favorite Movies</Text>
       <FlatList
         data={favoriteMovies}
         renderItem={({ item }) => (
@@ -50,8 +54,7 @@ export default function Favorite(): JSX.Element {
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         ItemSeparatorComponent={renderSeparator}
-        contentContainerStyle={{ paddingLeft: 28, paddingTop: 16 }}
-
+        contentContainerStyle={{ paddingLeft: 28, paddingTop: 16, paddingBottom: 16 }}
       />
     </View>
   )

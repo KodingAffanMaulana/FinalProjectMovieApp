@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, View, TouchableOpacity, ScrollView} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import type { Genre } from '../../types/app';
 import { API_ACCESS_TOKEN } from '@env';
@@ -39,15 +39,15 @@ const CategorySearch = (): JSX.Element => {
   };
 
   const navigation = useNavigation();
-  
-  const handleSearch = () => {
 
+  const handleSearch = () => {
     navigation.dispatch(StackActions.push('CategorySearchResult', { selectedGenres }));
     console.log('Searching for movies with genres:', selectedGenres);
   };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <Text style={{ color: 'white', paddingBottom: 10 }}>Select Category</Text>
       <View style={styles.container}>
         {genres.map((genre) => (
           <TouchableOpacity
@@ -55,8 +55,10 @@ const CategorySearch = (): JSX.Element => {
             activeOpacity={0.9}
             style={{
               ...styles.topBar,
-              backgroundColor: selectedGenres.includes(genre.id) ? '#8978A4' : '#dfd7ec',
-              borderRadius: 10,
+              backgroundColor: selectedGenres.includes(genre.id) ? '#782e6c' : '#170C34',
+              borderRadius: 5,
+              borderColor: '#ffffff',
+              borderWidth: 0.2,
             }}
             onPress={() => handlePress(genre.id)}
           >
@@ -65,7 +67,7 @@ const CategorySearch = (): JSX.Element => {
         ))}
         <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
           <Text style={styles.searchButtonText}>Search</Text>
-        </TouchableOpacity> 
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -73,15 +75,17 @@ const CategorySearch = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    paddingHorizontal: 16,
+    marginHorizontal: 15,
     paddingTop: 16,
-    paddingBottom: 80, // Added padding to the bottom to account for the bottom navigation bar
+    paddingBottom: 80,
   },
   container: {
-    paddingTop: 16,
+    paddingTop: 5,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
+    justifyContent: 'center',
+    gap: 10,
+    minHeight: 1200
   },
   topBar: {
     alignItems: 'center',
@@ -91,25 +95,26 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   topBarLabel: {
-    color: 'black',
+    color: 'white',
     fontSize: 16,
     fontWeight: '400',
     textTransform: 'capitalize',
   },
   searchButton: {
-    backgroundColor: '#8c77a7',
-    borderRadius: 40,
     alignItems: 'center',
+    backgroundColor: '#782e6c',
+    borderRadius: 10,
     justifyContent: 'center',
     height: 60,
     width: '100%',
     marginTop: 16,
   },
   searchButtonText: {
+
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-    textTransform: 'uppercase',
+    // textTransform: 'uppercase',
   },
 });
 

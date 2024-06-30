@@ -4,8 +4,8 @@ import { API_ACCESS_TOKEN } from '@env';
 import MovieItem from '../components/movies/MovieItem';
 import { Movie } from '../types/app';
 
-export default function CategorySearchResult ({ route }: { route: any }): JSX.Element {
-    
+export default function CategorySearchResult({ route }: { route: any }): JSX.Element {
+
   const { width } = Dimensions.get('window');
   const { selectedGenres } = route.params;
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
@@ -25,21 +25,21 @@ export default function CategorySearchResult ({ route }: { route: any }): JSX.El
     const options = {
       method: 'GET',
       headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${API_ACCESS_TOKEN}`,
+        accept: 'application/json',
+        Authorization: `Bearer ${API_ACCESS_TOKEN}`,
       },
     };
 
     fetch(url, options)
       .then(async (response) => await response.json())
       .then((response) => {
-          setSearchResults(response.results);
-          setIsEmpty(response.results.length === 0);
-          setLoading(false);
+        setSearchResults(response.results);
+        setIsEmpty(response.results.length === 0);
+        setLoading(false);
       })
       .catch((errorResponse) => {
-          console.log(errorResponse);
-          setLoading(false);
+        console.log(errorResponse);
+        setLoading(false);
       });
   };
 
@@ -68,13 +68,13 @@ export default function CategorySearchResult ({ route }: { route: any }): JSX.El
       <FlatList
         data={searchResults}
         renderItem={({ item }) => (
-        <TouchableOpacity style={styles.itemContainer}>
+          <TouchableOpacity style={styles.itemContainer}>
             <MovieItem
-                movie={item}
-                size={{ width: width / 2 - 32, height: (width / 2 - 32) * 1.5 }}
-                coverType="poster"
+              movie={item}
+              size={{ width: width / 2 - 32, height: (width / 2 - 32) * 1.5 }}
+              coverType="poster"
             />
-        </TouchableOpacity>
+          </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.listContainer}
@@ -88,10 +88,11 @@ export default function CategorySearchResult ({ route }: { route: any }): JSX.El
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 16,
+    paddingTop: 16,
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#170C34',
     paddingHorizontal: 16,
+    minHeight: 1200
   },
   loaderContainer: {
     flex: 1,

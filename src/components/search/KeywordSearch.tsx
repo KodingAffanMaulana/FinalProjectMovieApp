@@ -48,7 +48,7 @@ const KeywordSearch = (): JSX.Element => {
   const renderMovieItem = ({ item }: { item: Movie }): JSX.Element => {
     return (
       <TouchableOpacity style={styles.movieItemContainer}>
-        <MovieItem 
+        <MovieItem
           movie={item}
           size={{ width: width / 3 - 32, height: (width / 3 - 32) * 1.5 }} // Sesuaikan ukuran
           coverType="poster" />
@@ -79,7 +79,9 @@ const KeywordSearch = (): JSX.Element => {
           onChangeText={setKeyword}
           onSubmitEditing={handleSubmit}
         />
-        <FontAwesome name="search" size={20} color="black" style={styles.icon} />
+        <TouchableOpacity onPress={handleSubmit}>
+          <FontAwesome name="search" size={20} color="black" style={styles.icon} />
+        </TouchableOpacity>
       </View>
       <FlatList
         data={movies}
@@ -99,17 +101,15 @@ const KeywordSearch = (): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    marginHorizontal: 16,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f0f0f0',
-    borderRadius: 25,
-    paddingVertical: 5,
+    borderRadius: 10,
+    paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
-    height: 50,
   },
   input: {
     flex: 1,
@@ -128,9 +128,9 @@ const styles = StyleSheet.create({
     height: 4,
   },
   movieItemContainer: {
-    margin: 4, 
-    borderRadius: 8, 
-    overflow: 'hidden', 
+    margin: 4,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
   loading: {
     marginTop: 10,
