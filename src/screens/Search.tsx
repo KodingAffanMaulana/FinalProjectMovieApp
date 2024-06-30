@@ -38,7 +38,7 @@ export default function Search(): JSX.Element {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: StatusBar.currentHeight ?? 32,
+    marginBottom: StatusBar.currentHeight ?? 32,
     padding: 16,
   },
   topBarContainer: {

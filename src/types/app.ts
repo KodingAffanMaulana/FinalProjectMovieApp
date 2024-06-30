@@ -47,3 +47,8 @@ export interface MovieItemProps {
   size: { width: number; height: number }
   coverType: 'poster' | 'backdrop'
 }
+
+export interface Genre {
+  id: number;
+  name: string;
+}

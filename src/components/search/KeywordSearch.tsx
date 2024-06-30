@@ -1,140 +1,141 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native';
+import { View, TextInput, StyleSheet, FlatList, TouchableOpacity, Dimensions, Text, ActivityIndicator } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { API_ACCESS_TOKEN } from '@env';
+import MovieItem from '../movies/MovieItem';
 import type { Movie } from '../../types/app';
 
-export default function KeywordSearch(): JSX.Element {
-  const [searchText, setSearchText] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const KeywordSearch = (): JSX.Element => {
+  const [keyword, setKeyword] = useState('');
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [detailedMovies, setDetailedMovies] = useState<Record<number, Movie>>({});
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1); // Halaman saat ini
+  const { width } = Dimensions.get('window');
 
-  const handleEndEditing = async () => {
-    const url = `https://api.themoviedb.org/3/search/keyword?query=${searchText}&page=1`;
-    console.log('Fetching data from URL:', url);
-    
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${API_ACCESS_TOKEN}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
-      const data = await response.json();
-      console.log('Successfully fetched data:', data);
-      setMovies(data.results);
-      setError(null);
-    } catch (err) {
-        console.error('Error fetching movies:', err);
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('An unknown error occurred');
-        }
-      }
-    };
+  useEffect(() => {
+    // Reset state saat keyword berubah
+    setMovies([]);
+    setPage(1);
+  }, [keyword]);
 
-  const fetchMovieDetail = async (id: number) => {
-    const url = `https://api.themoviedb.org/3/movie/${id}`;
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${API_ACCESS_TOKEN}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
-      const data = await response.json();
-      setDetailedMovies((prevDetails) => ({
-        ...prevDetails,
-        [id]: data,
-      }));
-    } catch (err) {
-      console.error('Error fetching movie details:', err);
+  const handleSubmit = (): void => {
+    if (keyword) {
+      fetchMovies();
     }
   };
 
-  useEffect(() => {
-    if (movies.length > 0) {
-      movies.forEach((movie) => {
-        fetchMovieDetail(movie.id);
-      });
-      console.log('abcde')
-    }
-  }, [movies]);
+  const fetchMovies = (): void => {
+    setLoading(true);
+    const url = `https://api.themoviedb.org/3/search/movie?query=${keyword}&page=${page}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${API_ACCESS_TOKEN}`,
+      },
+    };
 
-  const renderMovies = () => {
-    return movies.map((movie) => (
-      <View key={movie.id} style={styles.movieContainer}>
-        <Text style={styles.movieText}>
-          {detailedMovies[movie.id]?.imdb_id || 'Loading...'}
-        </Text>
+    fetch(url, options)
+      .then(async (response) => await response.json())
+      .then((response) => {
+        setMovies((prevMovies) => [...prevMovies, ...response.results]);
+        setPage(page + 1);
+      })
+      .catch((error) => console.error('Error fetching movies:', error))
+      .finally(() => setLoading(false));
+  };
 
-        
+  const renderMovieItem = ({ item }: { item: Movie }): JSX.Element => {
+    return (
+      <TouchableOpacity style={styles.movieItemContainer}>
+        <MovieItem 
+          movie={item}
+          size={{ width: width / 3 - 32, height: (width / 3 - 32) * 1.5 }} // Sesuaikan ukuran
+          coverType="poster" />
+      </TouchableOpacity>
+    );
+  };
+
+  const renderSeparator = (): JSX.Element => {
+    return <View style={styles.separator} />;
+  };
+
+  const renderFooter = (): JSX.Element | null => {
+    if (!loading) return null;
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="small" color="#0000ff" />
       </View>
-    ));
+    );
   };
 
   return (
-    <View style={styles.searchContainer}>
-      <TextInput
-        style={styles.input}
-        placeholder="Search keyword"
-        value={searchText}
-        onChangeText={setSearchText}
-        onEndEditing={handleEndEditing}
+    <View style={styles.container}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Input title movie here"
+          value={keyword}
+          onChangeText={setKeyword}
+          onSubmitEditing={handleSubmit}
+        />
+        <FontAwesome name="search" size={20} color="black" style={styles.icon} />
+      </View>
+      <FlatList
+        data={movies}
+        renderItem={renderMovieItem}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={styles.movieList}
+        numColumns={3}
+        ItemSeparatorComponent={renderSeparator}
+        ListFooterComponent={renderFooter}
+        onEndReached={fetchMovies} // Memuat lebih banyak saat mendekati akhir daftar
+        onEndReachedThreshold={0.1} // Ambang batas jarak dari akhir daftar untuk memuat lebih banyak
       />
-
-      {error && <Text style={styles.errorText}>{error}</Text>}
-      <ScrollView contentContainerStyle={styles.resultContainer}>
-        {renderMovies()}
-      </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  searchContainer: {
+  container: {
     marginTop: 20,
-    padding: 10,
+    marginHorizontal: 16,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 25,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    marginBottom: 10,
+    height: 50,
   },
   input: {
-    height: 40,
-    borderColor: '#C0B4D5',
-    borderWidth: 1,
-    paddingLeft: 8,
-    borderRadius: 5,
-    marginBottom: 10,
+    flex: 1,
+    fontSize: 16,
+    marginLeft: 5,
   },
-  resultContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+  icon: {
+    marginLeft: 10,
+    marginRight: 5,
+  },
+  movieList: {
     marginTop: 10,
   },
-  movieContainer: {
-    width: '30%', // Adjust as needed
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#C0B4D5',
-    borderRadius: 5,
-    padding: 10,
+  separator: {
+    width: '100%',
+    height: 4,
   },
-  movieText: {
-    fontSize: 16,
-    color: '#333',
-    textAlign: 'center',
+  movieItemContainer: {
+    margin: 4, 
+    borderRadius: 8, 
+    overflow: 'hidden', 
   },
-  errorText: {
-    fontSize: 16,
-    color: 'red',
+  loading: {
     marginTop: 10,
+    alignItems: 'center',
   },
 });
+
+export default KeywordSearch;
