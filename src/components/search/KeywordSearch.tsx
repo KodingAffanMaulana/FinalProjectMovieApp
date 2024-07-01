@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, StyleSheet, FlatList, TouchableOpacity, Dimensions, Text, ActivityIndicator } from 'react-native';
+import { View, TextInput, StyleSheet, FlatList, TouchableOpacity, Dimensions, Text, ActivityIndicator, ScrollView } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { API_ACCESS_TOKEN } from '@env';
 import MovieItem from '../movies/MovieItem';
@@ -10,6 +10,7 @@ const KeywordSearch = (): JSX.Element => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1); // Halaman saat ini
+  const [isFetching, setIsFetching] = useState(false); // New state to prevent multiple fetches
   const { width } = Dimensions.get('window');
 
   useEffect(() => {
@@ -25,6 +26,8 @@ const KeywordSearch = (): JSX.Element => {
   };
 
   const fetchMovies = (): void => {
+    if (isFetching) return; // Prevent fetch if already fetching
+    setIsFetching(true);
     setLoading(true);
     const url = `https://api.themoviedb.org/3/search/movie?query=${keyword}&page=${page}`;
     const options = {
@@ -42,7 +45,10 @@ const KeywordSearch = (): JSX.Element => {
         setPage(page + 1);
       })
       .catch((error) => console.error('Error fetching movies:', error))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        setIsFetching(false); // Reset fetching state
+      });
   };
 
   const renderMovieItem = ({ item }: { item: Movie }): JSX.Element => {

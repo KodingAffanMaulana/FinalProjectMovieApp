@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: 10,
-    minHeight: 1200
+    gap: 4,
+    // minHeight: 1200
   },
   topBar: {
     alignItems: 'center',
